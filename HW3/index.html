@@ -13,11 +13,14 @@ padding: 0px;
   <script type="importmap">
     {
 "imports": {
-"three": "https://unpkg.com/three@latest/build/three.module.js"
-} }
+  "three": "https://unpkg.com/three@latest/build/three.module.js"
+  } 
+    }
 </script>
+<script src="node_modules/phaser/dist/phaser.min.js"></script>
 <script type="module">
 import * as THREE from 'three'; 
+
 const scene = new THREE.Scene();
 
 let boxes = [];
@@ -29,6 +32,11 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight ); 
 document.body.appendChild( renderer.domElement ); 
 renderer.setClearColor(0xAFFFAF);
+
+const geometry = new THREE.TorusGeometry( 5, 1, 16, 100 ); 
+const material = new THREE.MeshBasicMaterial( { color: 0xffff00 } ); 
+const torus = new THREE.Mesh( geometry, material ); 
+scene.add( torus );
 
 // Load Textures
 let floorWidth = 20;
@@ -102,7 +110,62 @@ floorMesh.receiveShadow = true;
 //boxMesh.castShadow = true;
 pointLight.castShadow = true;
 
+const phaserConfig = {
+    type: Phaser.AUTO,
+    width: window.innerWidth,
+    height: window.innerHeight,
+    parent: 'phaser-container', // Specify the ID of the container element
+    scene: {
+      preload: preload,
+      create: create,
+      update: update
+    }
+  };
+
+  const phaserGame = new Phaser.Game(phaserConfig);
+
+  // Define variables
+  let player;
+
+  // Preload function for Phaser scene
+  function preload() {
+    this.load.image('player', './Cartoon_Robot.svg.png'); // Load the player sprite
+  }
+
+  // Create function for Phaser scene
+  function create() {
+    player = this.physics.add.sprite(100, 100, 'player'); // Add the player sprite to the scene
+    player.setCollideWorldBounds(true); // Enable world bounds collision for the player
+  }
+
+  // Update function for Phaser scene
+  function update() {
+    // Handle player movement
+    const cursors = this.input.keyboard.createCursorKeys();
+    if (cursors.left.isDown) {
+      player.setVelocityX(-160);
+    } else if (cursors.right.isDown) {
+      player.setVelocityX(160);
+    } else {
+      player.setVelocityX(0);
+    }
+
+    if (cursors.up.isDown) {
+      player.setVelocityY(-160);
+    } else if (cursors.down.isDown) {
+      player.setVelocityY(160);
+    } else {
+      player.setVelocityY(0);
+    }
+  }
+
+
+
+
 function animate() {
+
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.01;
 
   for(let i = 0; i < boxes.length; i++) { 
     boxes[i].rotateX(Math.PI/(100+i));
@@ -114,5 +177,6 @@ animate();
   </script>
 </head>
 <body>
+  <div id="phaser-container"></div>
 </body>
 </html>
