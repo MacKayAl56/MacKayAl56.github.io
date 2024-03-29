@@ -111,26 +111,26 @@ floorMesh.receiveShadow = true;
 //boxMesh.castShadow = true;
 pointLight.castShadow = true;
 
-const phaserConfig = {
-    type: Phaser.AUTO,
-    width: window.innerWidth,
-    height: window.innerHeight,
-    parent: 'phaser-container', // Specify the ID of the container element
+
+var config = {
+    type: Phaser.AUTO,  // will try to pick WebGL canvas
+    width: 800,
+    height: 600,
     scene: {
       preload: preload,
       create: create,
       update: update
-    }
-  };
+} };
 
-  const phaserGame = new Phaser.Game(phaserConfig);
+
+  const phaserGame = new Phaser.Game(config);
 
   // Define variables
   let player;
 
   // Preload function for Phaser scene
   function preload() {
-    this.load.image('player', './Cartoon_Robot.svg.png'); // Load the player sprite
+    this.load.image('player', 'Cartoon_Robot.svg.png');
   }
 
   // Create function for Phaser scene
@@ -141,7 +141,6 @@ const phaserConfig = {
 
   // Update function for Phaser scene
   function update() {
-    // Handle player movement
     const cursors = this.input.keyboard.createCursorKeys();
     if (cursors.left.isDown) {
       player.setVelocityX(-160);
@@ -161,8 +160,6 @@ const phaserConfig = {
   }
 
 
-
-
 function animate() {
 
   torus.rotation.x += 0.01;
@@ -178,6 +175,5 @@ animate();
   </script>
 </head>
 <body>
-  <div id="phaser-container"></div>
 </body>
 </html>
