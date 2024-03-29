@@ -7,6 +7,13 @@ const config = {
         preload: preload,
         create: create,
         update: update
+    },
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 }, // Set gravity if needed
+            debug: false // Set to true if you want to see physics bodies
+        }
     }
 };
 
