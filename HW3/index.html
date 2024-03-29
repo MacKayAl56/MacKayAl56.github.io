@@ -9,7 +9,6 @@ margin: 0px;
 padding: 0px;
     }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/phaser@v3.80.1/dist/phaser.min.js"></script>
 <script async src="https://unpkg.com/es-module-shims@1.6.3/dist/es-module- shims.js"></script>
   <script type="importmap">
     {
@@ -111,53 +110,6 @@ floorMesh.receiveShadow = true;
 //boxMesh.castShadow = true;
 pointLight.castShadow = true;
 
-
-var config = {
-    type: Phaser.AUTO,  // will try to pick WebGL canvas
-    width: 800,
-    height: 600,
-    scene: {
-      preload: preload,
-      create: create,
-      update: update
-} };
-
-
-  const phaserGame = new Phaser.Game(config);
-
-  // Define variables
-  let player;
-
-  // Preload function for Phaser scene
-  function preload() {
-    this.load.image('player', 'Cartoon_Robot.svg.png');
-  }
-
-  // Create function for Phaser scene
-  function create() {
-    player = this.physics.add.sprite(100, 100, 'player'); // Add the player sprite to the scene
-    player.setCollideWorldBounds(true); // Enable world bounds collision for the player
-  }
-
-  // Update function for Phaser scene
-  function update() {
-    const cursors = this.input.keyboard.createCursorKeys();
-    if (cursors.left.isDown) {
-      player.setVelocityX(-160);
-    } else if (cursors.right.isDown) {
-      player.setVelocityX(160);
-    } else {
-      player.setVelocityX(0);
-    }
-
-    if (cursors.up.isDown) {
-      player.setVelocityY(-160);
-    } else if (cursors.down.isDown) {
-      player.setVelocityY(160);
-    } else {
-      player.setVelocityY(0);
-    }
-  }
 
 
 function animate() {
