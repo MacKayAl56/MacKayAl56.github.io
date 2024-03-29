@@ -31,6 +31,8 @@ function preload() {
 function create() {
     // Create player sprite
     player = this.physics.add.sprite(400, 300, 'player');
+
+    player.setScale(0.25);
     
     // Set bounds so the player cannot leave the screen
     player.setCollideWorldBounds(true);
